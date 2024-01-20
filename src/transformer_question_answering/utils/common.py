@@ -75,3 +75,17 @@ def get_size(path_to_file: Path) -> str:
     """
     size_in_kb = round(os.path.getsize(path_to_file)/1024)
     return f"~ {size_in_kb} KB"
+
+
+def get_start_end_idx(story):
+    str_idx = story['sentences'].find(story['answer'])
+    end_idx = str_idx + len(story['answer'])
+    return {'str_idx':str_idx,
+          'end_idx': end_idx}
+
+def get_question_and_facts(story):
+    dic = {}
+    dic['question'] = story['story.text'][2]
+    dic['sentences'] = ' '.join([story['story.text'][0], story['story.text'][1]])
+    dic['answer'] = story['story.answer'][2]
+    return dic
