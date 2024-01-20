@@ -5,3 +5,8 @@ data_ingestion:
   source_url: https://drive.google.com/file/d/1nCJWFEB_kWSpnTAWwIOcN9p5EaoUpBcy/view?usp=sharing
   local_data_file: artifacts/data_ingestion/data.zip 
   unzip_dir:  artifacts/data_ingestion
+
+data_validation:
+  root_dir: artifacts/data_validation
+  STATUS_FILE: artifacts/data_validation/status.txt
+  ALL_REQUIRED_FILES: ['train', 'test', '._dataset_dict.json', '._test', '._train', 'dataset_dict.json']
