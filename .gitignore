@@ -127,6 +127,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+transformer_qa/
 
 # Spyder project settings
 .spyderproject

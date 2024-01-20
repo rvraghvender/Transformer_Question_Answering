@@ -1,0 +1,9 @@
+transformers
+datasets
+matplotlib
+scikit-learn
+ensure==1.0.2
+notebook
+--extra-index-url https://download.pytorch.org/whl/cu121
+torch
+-e .
