@@ -3,7 +3,11 @@ datasets
 matplotlib
 scikit-learn
 ensure==1.0.2
+PyYAML
+tqdm
+gdown
 notebook
 --extra-index-url https://download.pytorch.org/whl/cu121
 torch
+python-box==6.0.2
 # -e .
