@@ -10,6 +10,7 @@ from transformer_question_answering.logging.logger import logging
 from ensure import ensure_annotations
 from box import ConfigBox
 from pathlib import Path
+from sklearn.metrics import f1_score
 from typing import Any 
 
 
@@ -89,3 +90,17 @@ def get_question_and_facts(story):
     dic['sentences'] = ' '.join([story['story.text'][0], story['story.text'][1]])
     dic['answer'] = story['story.answer'][2]
     return dic
+
+def compute_metrics(pred):
+    start_labels = pred.label_ids[0]
+    start_preds = pred.predictions[0].argmax(-1)
+    end_labels = pred.label_ids[1]
+    end_preds = pred.predictions[1].argmax(-1)
+    
+    f1_start = f1_score(start_labels, start_preds, average='macro')
+    f1_end = f1_score(end_labels, end_preds, average='macro')
+    
+    return {
+        'f1_start': f1_start,
+        'f1_end': f1_end,
+    }
