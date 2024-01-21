@@ -47,6 +47,8 @@ class ModelTrainer:
         # trainer.cuda.empty_cache()
         trainer.train()
 
+        print(trainer.evaluate(test_ds))
+
         model.save_pretrained(os.path.join(self.config.root_dir, "distilbert-qa-model"))
 
         # Save tokenizer
