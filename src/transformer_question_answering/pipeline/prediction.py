@@ -17,20 +17,23 @@ class PredictionPipeline:
 
 
     def predict(self, text: str, question: str) -> str:
-        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        try:
+            result = self.qa_pipe(question=question, context=text)
 
-        result = self.qa_pipe(question=question, context=text)
+            print('Text')
+            print(text)
 
-        print('Text')
-        print(text)
+            print('\nQuestion')
+            print(question)
 
-        print('\nQuestion')
-        print(question)
+            print('\nAnswer')
+            print(result['answer'].capitalize())
 
-        print('\nAnswer')
-        print(result['answer'].capitalize())
-
-        return result['answer'].capitalize()
+            return result['answer'].capitalize()
+        
+        except Exception as e:
+            logging.exception(e)
+            raise CustomException(e, sys)
     
 
 if __name__ == "__main__":
