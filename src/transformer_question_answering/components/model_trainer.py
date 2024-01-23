@@ -3,8 +3,8 @@ from transformers import DistilBertForQuestionAnswering
 from transformer_question_answering.entity import ModelTrainerConfig
 from transformer_question_answering.utils.common import compute_metrics
 from transformers import DistilBertTokenizerFast
+from transformers import EarlyStoppingCallback
 import torch
-from torch.utils.data import DataLoader
 from datasets import load_from_disk
 import os
 
@@ -33,7 +33,13 @@ class ModelTrainer:
             per_device_eval_batch_size=self.config.per_device_eval_batch_size,   # batch size for evaluation
             warmup_steps=self.config.weight_decay,                # number of warmup steps for learning rate scheduler
             weight_decay=self.config.weight_decay,
-            logging_steps=self.config.logging_steps
+            logging_steps=self.config.logging_steps,
+            evaluation_strategy=self.config.evaluation_strategy,
+            eval_steps = self.config.eval_steps,
+            save_steps = self.config.save_steps,
+            gradient_accumulation_steps = self.config.gradient_accumulation_steps,
+            load_best_model_at_end=True,
+            save_total_limit = 5, # Only last 5 models are saved. Older ones are deleted.
         )
 
         trainer = Trainer(
@@ -41,7 +47,8 @@ class ModelTrainer:
             args=training_args,                  # training arguments, defined above
             train_dataset=train_ds,         # training dataset
             eval_dataset=test_ds,
-            compute_metrics=compute_metrics             # evaluation dataset
+            compute_metrics=compute_metrics,             # evaluation dataset
+            callbacks=[EarlyStoppingCallback(early_stopping_patience=3)],
         )
 
         # trainer.cuda.empty_cache()

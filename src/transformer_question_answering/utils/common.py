@@ -92,6 +92,15 @@ def get_question_and_facts(story):
     return dic
 
 def compute_metrics(pred):
+    """
+        Compute F1 scores for start and end predictions.
+
+        Args:
+            pred: Predictions object containing label_ids and predictions
+
+        Returns:
+            A dictionary with F1 scores for start and end predictions.
+    """
     start_labels = pred.label_ids[0]
     start_preds = pred.predictions[0].argmax(-1)
     end_labels = pred.label_ids[1]
